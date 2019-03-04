@@ -11,7 +11,7 @@ import random
 hlavni= tk.Tk()
 Label(hlavni, text="Operace:").grid(row=0, column=0, columnspan=1)
 
-                    ###### ZNAMENKO ######
+                    ###### ZNAMENKA ######
 
 znamenko=tk.StringVar()
 def getznamenko():
