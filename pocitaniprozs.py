@@ -1,77 +1,59 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jan 22 09:57:13 2019
-
-@author: lac35158
+@author: Lachtyyy
 """
 
 import tkinter as tk
-from tkinter import LabelFrame, Radiobutton, Entry
-from random import randint
+from tkinter import Label, Entry, END, Radiobutton, Button,
+import random
 
-class Application(tk.Tk):
-    name = 'Počítání pro ZŠ'
+
+hlavni= tk.Tk()
+Label(hlavni, text="Operace:").grid(row=0, column=0, columnspan=1)
+
+                    ###### ZNAMENKO ######
+
+znamenko=tk.StringVar()
+def getznamenko():
+    selection=str(znamenko.get())
+    Znak.config(text=selection)
+
+znamenko=tk.StringVar()   
+def novypriklad():
+    cisloA= random.randint(1,10)
+    cisloB= random.randint(1,10)
+    cisloAentry.delete(0, END)
+    cisloAentry.insert(0, str(cisloA))
+    cisloBentry.delete(0, END)
+    cisloBentry.insert(0,str(cisloB))
     
-    def __init__(self):
-        super().__init__(className=self.name)
-        self.title(self.name)
-        self.config(borderwidth=10)
-        self.lbl = tk.Label(self, text='Počítání pro ZŠ')
-        self.lbl.pack()
-        self.operaceVar = tk.StringVar()
-        self.operaceVar.trace('w', self.vypocet)
-        self.operaceFrame = LabelFrame(self, text="Operace",padx=5, pady=5)
-        self.operaceFrame.pack(anchor=tk.W)
-        Radiobutton(self.operaceFrame, text="+",
-                    variable=self.operaceVar, value='+').pack()
-        Radiobutton(self.operaceFrame, text="-",
-                    variable=self.operaceVar, value='-').pack()
-        Radiobutton(self.operaceFrame, text='*',
-                    variable=self.operaceVar, value='*').pack()
-        Radiobutton(self.operaceFrame, text='/',
-                    variable=self.operaceVar, value='/').pack()
-        self.operaceVar.set('+')   # vyberu nákup
-        self.kkn = tk.Button(self, text = 'Vypočitej!', command = self.vypocet)
-        self.kkn.pack()
-        self.bind("<Escape>", self.quit)
-        
-        
-    def ukazka(self, event):
-        print(event.x, event.y, event.num, event.type)
-        print(dir(event))
-    
-    def plus(self):
-        self.x = randint(1, 99)
-        self.y = randint(0, 100-self.x)
-        self.vysl = self.x + self.y
-        
-    def mínus(self):
-        self.x = randint(1, 99)
-        self.y = randint(0,self.x)
-        self.vysl = self.x - self.y
-    
-    def krat(self):
-        self.x = randint(1, 9)
-        self.y = randint(1, 9)
-        self.vysl = self.x * self.y
-    
-    def deleno(self):
-        self.x = randint(1, 9)
-        self.y = randint(1, 9)
-        self.vysl = self.x * self.y
-    
-    def vypocet(self):
-        operace = (self.plus, self.mínus, self.krat, self.deleno)
-        random = randint(0, 3)
-        funkce = operace[random]
-        funkce()
-        print()
-        print(self.x, funkce.__name__,self.y, '=')
-    
-    
-    def quit(self, event=None):
-        super().quit()    
-    
-app = Application()
-app.mainloop()
+                    ###### MENU ######
+radioplus=Radiobutton(hlavni, text="+", value="+", variable=znamenko, command=getznamenko)
+radioplus.grid(row=0, column=1)
+radiominus=Radiobutton(hlavni, text="-", value="-", variable=znamenko, command=getznamenko)
+radiominus.grid(row=0, column=2)
+radionasobeni=Radiobutton(hlavni, text="*", value="*", variable=znamenko, command=getznamenko)
+radionasobeni.grid(row=0, column=3)
+radiodeleno=Radiobutton(hlavni, text="/", value="/", variable=znamenko, command=getznamenko)
+radiodeleno.grid(row=0, column=4)
+novypriklad=Button(hlavni, text="Nový příklad", command=novypriklad)
+novypriklad.grid(row=0, column=5)
+
+                ##### CISLA A VYSLEDEK #####
+cisloAentry= Entry(hlavni, width=3)
+cisloAentry.grid(row=1, column=0)
+
+Znak= Label(hlavni, text="")
+Znak.grid(row=1, column=1)
+
+cisloBentry= Entry(hlavni, width=3)
+cisloBentry.grid(row=1, column=2)
+
+rovnase= Label(hlavni, text="=", width=5)
+rovnase.grid(row=1, column=3)
+
+Vysledek= Entry(hlavni, width=4)
+Vysledek.grid(row=1, column=4)
+
+
+hlavni.mainloop()
